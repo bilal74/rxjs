@@ -1,0 +1,2060 @@
+RXJS by UX Trendz
+
+=========
+Episode 1
+=========
+
+RXJS - Library
+Reactive programming me kaam ati h
+
+Observable ko use krke asynchronous task ko krte h
+
+RXJS ko kahi bhi use kr skte h
+---
+
+Angular me automatic install hoke ati h
+----
+
+Observable - RXJX me introduce hua h
+bht imp h
+
+Observable - Data source
+Isme items hote h - Observable ka data
+
+Iska kaam hota h tym to tym data ko emmit krna
+
+agr hme data chahiye to observable k data ko subscribe krna pdega.
+-
+
+agr data kaam ka hoga to le lega nhi to ignore krega
+--
+
+Operators of RXJS
+
+Filter
+Map
+From
+Of
+toArray
+Take
+merge
+
+------
+
+Observer and Subscribe
+
+jb data chahiye observable mese to subscribe krenga
+
+or jo code likhenge subcribe k lye use bolte h observer
+
+---
+
+RXJS Marble Diagram
+www.rxmarbles.com
+
+map bht imp hota h
+isse apn data ko transform kr skte h
+map(x => 10 * x)
+--------------------------------------------------------------------
+
+=========
+Episode 2
+=========
+
+Promise and Asynchronous:
+
+ab project bna lo angular ka
+
+ng new RxjsSeries
+y
+scss
+-
+
+Open in vs code
+
+ng serve -o
+
+bootstrap install krlo
+
+then header le aao bootstrap se
+
+app
+  header
+	ye component bna k, navbar le aao bootstrao se
+-
+
+ab promise component bna lenge
+	ng g c promise
+-
+
+ab app-routing.module.ts pr ajao
+
+import { PromiseComponent } from './promise/promise.component';
+
+Routes = [
+	{path: 'promise', component:PromiseComponent},
+	{path: '**', redirectTo:'promise'}	
+	//isse redirect hoke promise page hi ayga	
+];
+--
+
+navbar wale me ek btn bna lo promise nam ka.
+Usme path add krdo
+
+ab chl jayga component
+-
+
+D/f b/w Promise and Observable
+
+Promise				|	Observable
+				|
+1. async			| 1. async or sync (both)
+2. Return Single Value		| 2. Return Stream of value
+	- resolve (yes)		|	0----0-----0
+	- reject (no)		|
+
+---------------
+
+===========
+Episode 2.2
+===========
+
+Promise
+
+definate	 - kuch chiz hm khud krne wale h
+
+indefinate	 - Kisi se krwane wale h
+-
+
+promise.component.html pr ajao
+
+	h2 Promise
+	
+	<button class="btn" (click)="myFunction()"> Click me </button>
+
+promise.component.ts
+
+	ngOnit() {} k bad
+
+	myFunction(){
+		log("myFunction called");
+	}
+-
+
+Promise me 2 case honge
+agr kisi ko samaan lene k lye bhja h
+to yato samaan mil jayga ya nhi milega(reject)
+
+is case me confirm nhi hota, hona h ya nhi hona h to wo async me ate h
+in sb k lye promise use krte h
+-
+
+promise.component == p.c.
+
+p.c.ts:
+-------
+
+then	- agr fulfill ho rha h promise to
+catch	- agr error arha h to
+
+ab promise bna lo
+	let buyLaptop = new Promise((resolve, reject) => {
+		//resolve("Promise Resolved");
+		reject("Promise Reject");
+	});	
+
+ab fn bna lo
+	buyLaptop.then(res => {
+		log('then code =>', res)
+	}).catch(res=>{
+		log('catch code =>', res)
+	})
+--
+
+//Promise me data immediate nhi ata
+
+ab hmne laptop lene bhja h, Dell ka ya HP ka
+agr nhi mile to esi ajao ye scenerio h
+
+ab constructor k bad
+	DellAvailable(){
+		return true
+	}
+	HpAvailable(){
+		return false
+	}
+	
+	promiseVal;
+-
+
+ab ise change kro
+	let buyLaptop = new Promise((resolve, reject) => {
+		if(this.DellAvailable){
+			return setTimeout(()=>{
+				resolve('Dell is purchased')
+				//iski jagha pr object bna k bhi bhj skte h
+			}, 3000)			
+		}
+		else if(this.HpAvailable){
+			return setTimeout(()=>{
+				resolve('Hp is purchased')
+			}, 3000)			
+		}		
+		else{
+			return setTimeout(()=>{
+				reject('Laptop not available')
+			}, 3000)			
+		}	
+	});
+-
+ab isko edit krenge
+	buyLaptop.then(res => {
+		log('then code =>', res)
+		this.promiseVal = res;
+	}).catch(res=>{
+		log('catch code =>', res)
+		this.promiseVal = res;
+	})
+-----
+
+p.c.html
+	h2 {{promiseVal}}
+
+------------------------
+
+=========
+Episode 3
+=========
+
+Async Await
+
+jb bhi hm fn se phle async likhte h tb wo return krta h promise
+
+rukta h promise pura hone tk 
+rok k rakhta h
+------------------
+
+=========
+Episode 4
+=========
+
+Observable Streams
+
+new component bna lo
+ng g c observable
+
+routing me lga lo
+app-routing.module.ts
+
+observable add krlo
+---
+
+Observable Stream
+in sb chizo se milti h
+	- User Input (Button Click Event)
+	- Http Request
+	- Array
+	- Object
+
+Observable Handle(subscribe)
+	- Data
+	- Error
+	- Completion
+--
+
+Syntax
+	.subscribe(
+		(data) => log(data),
+		(error) => log(error),
+		() => log('Complete')	
+	)
+-----
+
+Create Observable
+
+do or component bna lo observable k andar
+ng g c list
+ng g c fromEvent
+
+ab iski routing krdo
+
+Routes = [
+  {path: 'observable', component:ObservableComponent, children:[
+	{path: '', component: ListComponent},
+	{path: 'fromEvent', component: FromEventComponent},				
+  ]},
+]
+
+ab observable.component.html me ajao
+
+	<router-outlet></router-outlet>
+
+-----------
+
+list.c.html
+
+	<li> <a routerLink="fromEvent"> FromEvent
+	<li> <a routerLink="fromEvent"> FromEvent
+	<li> <a routerLink="fromEvent"> FromEvent
+-
+
+ab ajao
+fromEvent.c.html
+
+	<button #addBtn > Add </>
+
+	li Video1
+	li Video2
+	li Video3
+	li Video4
+-
+
+fromEvent.c.ts
+export me OnInit k bad , AfterViewInit
+
+	@ViewChild('addBtn') addBtn:ElementRef;	
+
+	ngAfterViewInit(): void {
+		let count = 1;
+		fromEvent(this.addBtn.nativeElement, 'click').subscribe(res =>{
+			log(res);
+			let countVal = 'Video '+ count++;
+			log(countVal)
+			this.print(countVal, 'elContainer1');
+			this.print(countVal, 'elContainer2');
+		})
+	}
+	
+	print(val, containerId){
+		let el = document.createElement('li');
+		el.innerText = val;
+	document.getElementById('elContainer').appendChild(el);
+	}
+
+ab btn pr click krenge to cosole ho rha hoga, stram bn chuki hogi
+--
+	
+Ab agr DOM me show karana h thn
+
+ngFor use nhi kr skte coz ye Stream h, array nhi h
+
+	<ul id="elContainer1"></ul>
+	<ul id="elContainer2"></ul>
+
+jitni bar btn pr click krenge utni bar new li bnta jayga
+------------
+
+ab ek service bna lo
+appServices
+
+ng g s design-utility
+	fromEvent.c.ts file se ye data cut krlo
+
+	print(val, containerId){
+		let el = document.createElement('li');
+		el.innerText = val;
+	document.getElementById('elContainer').appendChild(el);
+	}
+
+	or is file me paste krdo, constructor k bad
+-
+
+fromEvent.c.ts
+
+constructor me
+	constructor(private _designUtility: DesignUtilityServices) {}
+
+aab fromEvent me
+	this._designUtility.print(countVal, 'elContainer1')
+	this._designUtility.print(countVal, 'elContainer2')
+	this.print  # ye wala comment krdo
+---
+------------------
+=========
+Episode 5
+=========
+
+Interval and Timer:
+
+Observabe Stream create krenge isme
+
+ng g c interval
+
+routing me bhi set krlo
+path de k
+-
+Interval:
+
+interval.c.ts
+	
+	constructor se phle
+	obsMsg;	
+	videoSubscription: Subscription;
+	
+	ngOnInit(): void {
+		const broadCastVideos = interval(2000);
+		
+		this.videoSubscription = broadCastVideos.subscribe(res => {
+			log(res);
+			this.obsMsg = "Video "+res;
+
+			if(res >= 5){
+			   this.videoSubscription.unsubscribe();
+			}
+		})
+		#isse har 2 sec me stream crreate hogi
+	}
+-
+
+interval.c.html
+	h2 {{obsMsg}}
+--------
+
+Timer:
+same as interval bs e 2 argument leta h
+(delay, interval)
+
+	ngOnInit(): void {
+		const broadCastVideos = interval(2000);
+
+	baki upr k jesa pura same
+----
+------------------
+=============
+Extra content
+=============
+
+Switch Map
+
+Isse apn search krne me help hoti h
+
+google jese search krta h wesa search engine jesa kind of
+
+rx sarch kra to 2 result found.
+is typ ka show hoga
+
+------------------
+=========
+Episode 6
+=========
+
+Of and From operator
+
+ng g c of-from
+
+routing me bhi dal do
+-
+
+Of() operator
+Convert the arguments to an observable sequence
+
+of-from.c.ts
+
+	ngOnInit(): void {
+		//of
+		const Obs1 = of('Bilal', 'Rishab', 'Ravi');
+		
+		Obs1.subscribe(res => {
+			log(res)
+		}
+
+	#2nd example
+		const Obs2 = of(a:'Bilal', b:'Rishab', c:'Ravi');
+		
+		Obs2.subscribe(res => {
+			log(res)
+		}
+	}
+-
+
+{ - &#123
+} - &#125
+--
+
+From() Operator
+Array ko convert kr skte h observable stream me
+
+	#From example
+		const Obs3 = from(['Bilal', 'Rishab', 'Ravi']);
+		
+		Obs3.subscribe(res => {
+			log(res)
+		}
+	}
+
+	#From-promise example
+	
+		const promise = new Promise(resolve => {
+			setTimeout(() => {
+				resolve("Promise Resolved");
+			}, 3000);
+		}
+	
+		const 4= from(promise);		
+		Obs4.subscribe(res => {
+			log(res)
+		})
+	}
+-
+	From String example
+
+		const 5= from("Hello World");		
+		Obs5.subscribe(res => {
+			log(res)
+		})
+-----------------------------------
+
+=========
+Episode 7
+=========
+
+ToArray Operator:
+
+collect all data then convert it into array
+
+ng g c to-array
+
+routing me bhi add krlo
+-
+
+	sourceSub:
+	ngOnInit(): void {
+		counst source = interval(1000);
+
+		this.sourceSub = source.pipe(
+			take(5),		#bs 5 bar chalega
+			toArray()		#data to convert krega
+			)
+			.subscribe(res => {
+				log(res);
+			});
+	}
+
+-----------------------------
+
+=========
+Episode 8
+=========
+
+Custom Observable
+ng g c custom observable
+
+ab list me show kra do routing bhi krdo
+
+custom.c.html
+
+.row
+  .col-md-6
+	h1 Manual
+	ul
+		li Angular
+		li typescript
+		li HTMl
+
+.col-md-6
+	h1 Custom
+	ul
+		li Angular
+		li typescript
+		li HTMl
+-
+
+agr class lagani ho html me
+
+	<ul [ngClass]="techStatus == 'completed'? 'completed' : 
+		techStatus == 'error'? 'error' : ''"
+---
+
+custom.c.ts
+
+ngOnInit(): void {
+
+	const cusObs1 = Observable.create(observer => {
+		setTimeout(() => {
+			observer.next('Data Emit 1');
+		}, 1000);
+		//observer.error();
+		//observer.complete();		#complete krne k lye use krte h
+
+		setTimeout(() => {
+			observer.next('Data Emit 2');
+
+			#yhi pr complete hoke ruk jayga
+			observer.complete();
+		}, 2000);
+		setTimeout(() => {
+			observer.next('Data Emit 3');
+			observer.error(new Error('Error'))
+			#agr ye dal doge to error ajayga
+		}, 3000);
+	})
+	
+	cusObs1.subscribe(res => {
+		log(res);
+		this._designUtility.print(res, 'elContainer')
+	},
+	(err) => {
+		this.techStatus = 'error'
+	},
+	() => {
+		this.techStatus = 'completed';
+	}
+	)
+
+}
+----------
+
+===========
+Episode 8.2
+===========
+
+Custom Observable
+Custom Interval Observable
+
+custom.c.ts
+
+	const cusObs2 = Observable.create(observer => {
+		setInterval(()=> {
+			observer.next('Data emit')
+		}, 1000)
+	})
+
+	susObs2.subscribe(res=> {
+		log(res)
+	})
+ab data non stop chl rha hoga
+-
+
+export class me OnInit k bad
+	OnInit, OnDestroy
+	
+constructor se phle
+	subs2:Subscription;
+
+then
+	ngOnDestroy(){
+		this.subs2.unsubscribe();
+	}
+
+ab jb kisi dusre component pr jayenge to ruk jayga
+----------
+
+Emit Array Data in Custom Observable:
+
+	const Arr2 = ['Angular', 'JS', 'HTML', 'CSS']
+	const cusObs2 = Observable.create(observer => {
+		let count = 1;
+		setInterval(()=>{
+			observer.next(Arr2[count]);
+			
+			if(count >= 3){
+				observer.error('Error')
+			}
+			if(count >= 5){
+				observer.complete()
+			}
+			count++;
+		}, 1000)
+	})
+
+	this.subs2 = cusObs2.subscribe(res => {
+		log(res)
+	})
+---------
+
+Random Names in Observable
+	Same esa hi h upr jese. bs HTML me show kra do
+
+	this.subs2 = cusObs2.subscribe(res => {
+		log(res)
+		this.names = res;
+	}
+-
+custom.c.html
+	li {{name}}
+-------------------------------------------------------------------
+
+=========
+Episode 9
+=========
+
+MAP Operator
+
+data ko tranform krne k lye use krte h.
+
+API se data mila or same wesa use nhi krna h thoda change krna h
+tb use krte h ise
+
+return krta h new observable
+
+map(Aata=> Chapati)
+-
+
+new component bna lo
+list me add krlo
+router me add krlo
+
+ng g c map
+
+	constructor se phle
+	sub1 : Subscription;		#import bhi kr lena
+
+	ngOnInit(): void {
+
+	const broadCastVideos = interval(1000);		# import bhi krlo
+
+	this.sub1 = broadCastVideos.subscribe(res => {
+		log("Video " + res)	
+	})
+
+	setTimeout(()=> {
+		this.sub1.unsubscribe()
+	}, 10000);
+-
+
+ab value show kra do console pr.
+fir ye value transform krenge
+-
+
+Pipe use krenge -
+	this.sub1 = broadCastVideos.pipe(
+		map(data => 'Video ' + data)
+			or
+		map(data => data * 3)
+			or
+		map(data => data + 10)
+	)
+	.subscribe(res => {
+		log(res)	
+	})
+--
+ab isko html me bhi dikha skte ho
+-
+
+agr object ko pipe krna ho to
+
+object ko observable bna lo phle ( from se banda h )
+
+	const members = from([
+		{ id: 1, name: 'Bilal1'},
+		{ id: 2, name: 'Bilal2'},
+		{ id: 3, name: 'Bilal3'},
+		{ id: 4, name: 'Bilal4'},
+		{ id: 5, name: 'Bilal5'},
+	])
+-
+ab sirf name chahiye to convert kr lenge
+
+	members.pipe(
+		map(data => data.name);
+	)
+	.subscribe(res => {
+		log(res);
+	})
+
+ab data mil jayga console me
+
+html me khud show kara lena
+-----------
+----------------------------------------------------------------------------
+==========
+Episode 10
+==========
+
+Pluck Operator in RXJS
+
+data k object ki kisi property ka data received krne k lye use krte h
+
+ng g c pluck
+routing me add krlo ye
+
+pluck.c.ts
+	constructor end hone k bad
+	
+	users = [
+	{ name: 'bilal1', skills: 'React' },
+	{ name: 'bilal2', skills: 'React' },
+	{ name: 'bilal3', skills: 'React' },
+	{ name: 'bilal4', skills: 'React' },
+	{ name: 'bilal5', skills: 'Angular' }
+	]
+-
+
+ab ise convert krlo observable me
+
+	ngInit me ajao
+
+	from(this.users).pipe(
+		pluck('name'),
+		toArray()
+	)
+	.subscribe(res => {
+		log(res);
+	})
+-
+
+agr nested object h to uske lye
+
+	from(this.users).pipe(
+		pluck('job','title'),
+		toArray()
+	)
+	.subscribe(res => {
+		log(res);
+	})
+-
+
+nested object is typ se bna k dekhlo
+
+	users = [
+	{ name: 'bilal1', skills: 'React' ,
+		job: {
+			title: "Soft Developer"
+		}	
+	},
+	{ name: 'bilal2', skills: 'React' },
+	{ name: 'bilal3', skills: 'React' },
+	{ name: 'bilal4', skills: 'React' },
+	{ name: 'bilal5', skills: 'Angular' }
+	]
+
+----------------------------------------------------------------------------
+==========
+Episode 11
+==========
+
+Filter operator in RXJS
+
+ng g c filter
+
+routing add krlo
+
+filter.c.ts
+
+constructor se phle
+
+	dataArr = [
+		{ id: 1, name: 'Bilal1', gender: 'Male'},
+		{ id: 2, name: 'Bilal2', gender: 'Male'},
+		{ id: 3, name: 'Bilal3', gender: 'FeMale'},
+		{ id: 4, name: 'Bilal4', gender: 'Male'},
+		{ id: 5, name: 'Bilal5', gender: 'FeMale'},
+		{ id: 6, name: 'Bilal2', gender: 'Male'},
+		{ id: 7, name: 'Bilal3', gender: 'FeMale'},
+		{ id: 8, name: 'Bilal4', gender: 'Male'},
+		{ id: 9, name: 'Bilal511', gender: 'FeMale'},
+	]
+-
+
+ngOninit me
+	const source = from(this.dataArr);
+
+	//For filter by length
+	source.pipe(
+		filter(member => member.name.length > 6),
+		toArray()
+	)
+	.subscribe(res => {
+		log(res)
+	})
+--
+	
+	//For filter by gender
+	source.pipe(
+		filter(member => member.gender == 'Male'),
+		toArray()
+	)
+	.subscribe(res => {
+		log(res)
+	})
+--
+	
+	//For filter by Nth item
+	source.pipe(
+		filter(member => member.id <= 6),
+		toArray()
+	)
+	.subscribe(res => {
+		log(res)
+	})
+
+----------------------------------------------------------------------------
+==========
+Episode 12
+==========
+
+TAP/Do Operator in RXJS
+
+transparently perform actions or side-effects, such as logging
+
+ng g c tap
+
+routing me add krlo
+
+inOnInit{
+
+	const source = interval(2000);
+
+	let obsSubscription: Subscription;
+
+	obsSubscription = source.pipe(
+		tap(res => {
+			if(res == 4){
+				obsSubscription.unsubscribe()
+			}
+		}),
+		map(res => 'Number ' + res);
+	)
+	.subscriebe(res => {
+		log(res)
+	});
+
+-
+agr map me direct condition lagate to map gadbad ho jata.
+islye tap use kra h
+
+or agr bht sare operators h or apn ko bich me data check krna h
+to TAP use krte h.
+
+----------------------------------------------------------------------------
+==========
+Episode 13
+==========
+
+Take Operators in RXJS
+observable streams me se jitna data chahiye utna data leke use kr skte h
+
+ng g c take
+routing me add krlo
+
+taks.c.ts
+
+constructor k bad
+	arr1 = ['bilal1','bilal2','bilal3','bilal4','bilal5']
+
+ngOnInit me
+
+	#ye bad me batana h line
+	const nameSource = from(this.arr1);
+
+	let condition = timer(5000);		#import bi kr lena
+	let condition2 = fromEvent(document, 'click');		#document = webpage
+	#jb click krenge tb stop hoga
+
+	const cource = interval(1000).pipe(
+		take(5)			  #5 k bad ruk jayga
+		takeLast(5)		  #last k 5 lega
+		takeUntil(condition)	  #ye condition leta h/ notifier leta h
+	);
+
+	source.subscribe(res => {
+		log(res)
+	})
+
+----------------------------------------------------------------------------
+==========
+Episode 14
+==========
+
+Retry, RetryWhen, Scan and Delay Operator in RXJS
+
+Kisi chiz ko retry krne k lye use krte h
+
+For example - server se response nhi aya to retry krega k response
+		mil jaye
+
+ng g c retry
+add bhi krlo routing me
+
+retry 		- bar2 retry krega data get krne k lye ek limit tk
+retrywhen 	- ek time limit k bad try krega
+delay		- ye btayga kitni der bad re try krna h
+scan		- ye btayga kb rukna h- kitne attempt k bad
+
+retry.c.ts
+
+ab http request ko le ate h
+
+	constructor(private http: HttpClient) {}
+				isko import bhi kr lena angular se
+
+	fetchDetails(){
+		this.http.get('https://global-1bb0f.firebaseio.com/user.json')
+		.pipe(
+			//retry(4);			#4 bar retry krega
+			retryWhen(err => err.pipe(
+			   delay(3000),		#isse har 3 sec bad retry krega
+
+			   scan((retryCount){
+				if(retryCount >= 5){
+					throw err
+				}
+				else{
+					retryCount = retryCount + 1;
+					return retryCount
+				}
+			},0)
+			));	
+		)
+		.subscribe(res=>{
+			log(res)
+		})
+
+	ab ngOnInit me
+		this.fetchDetails();
+
+	}
+
+----------------------------------------------------------------------------
+==========
+Episode 15
+==========
+
+DebounceTime & DistinctUntilChanged Operator
+-
+
+DebounceTime :
+jab hm kuch search krte h tb use hota h
+
+har bar request server pr na jaye islye use krte h
+0.5sec k bad request server pr jaygi
+-
+
+DistinctUntilChanged : 
+jiski request ek bar ja chuki h, uski request dobara nhi jaye
+
+Switch map me bhi use hota h ye
+----
+
+new component bna lo
+ng g c debounceTime
+routing bhi add krlo
+
+forms wala code utha lo bootstrap se
+seacrh field le aao
+-
+
+input field me id bna lo 
+#myInput
+
+ab ajao
+debouncetime.c.ts me
+
+constructor se pehle
+	@ViewChild('myInput') myInput:ElementRef;
+
+DOM load hone k bad aye, islye use krenge AfterViewInit
+
+	AfterViewInit(): void {
+	#import bhi kr lena fromEvent ko
+	  const searchTerm = fromEvent<any>(this.myInput.nativeElement, 'keyup')
+	  .pipe(
+		map(event => event.target.value),
+		debounceTime(1000)		#ek sec ruk k bhjega request
+	  )
+
+		searchTerm.subscribe(res=>{
+			log(res)
+		})		
+	}
+
+ab data milne lg gya hoga console me..
+
+jitni bar bhi likh rhe hoge utni bar log ho rha hoga
+mtlb utni bar request bhjega server pr (jo sahi nhi h)
+islye debounceTime use krenge
+-
+
+agr loading bar add krna ho angular me to
+
+constructor(private loadingBar: LoadingBarService){}
+
+	log(res) k bad
+	this.loadingBar.start();
+
+then
+	set timeout lga k stop kr skte ho 2,4,5 sec bad jitna lagana ho
+
+--
+
+DistinctUntilChanged:
+
+bar2 request nhi jana chahiye
+-
+
+same html lelo
+input field bhi lelo or id bna do 
+#myInput2
+
+sab same rhne do
+	searchTerm me debounceTime k bad ye likh do bs
+
+	distinctUntilChanged();
+
+kaam ho jayga
+-
+
+----------------------------------------------------------------------------
+==========
+Episode 2		Behind the scenes
+==========
+
+Concat Map (sneak peek)
+Use for mobile notifications
+
+----------------------------------------------------------------------------
+==========
+Episode 16
+==========
+
+Subject and BehaviorSubject:
+Special typ ka Observable h
+mtlb observer bhi h and observable bhi h
+-
+
+Observable 
+	-	Pipe
+	-	Subscribe
+----
+
+Observer
+	-	Next
+	- 	Error
+	-	Complete
+----
+
+cross compoent communication k lye use krte h
+data communication me use krte h
+
+jaha par cmponent me parent child relation nhi h
+or apn ko data send karna h tb use krte h Subject
+-
+
+Event Emitter : isse hm child ka data send kar skte h parent me
+
+	Parent		Data		Child
+			(emit)
+-
+
+Subject bhi Event Emitter ki tarha kaam krta h
+
+	Componet2	 Data	 Component1	 Data	 Service	
+			(next)			(next)
+-
+
+Subject me multiCasting bhi kr skte h.
+
+	jaha se data mil rha h whi se dekh payenge
+	purana nhi dikhega
+-----
+
+component bna lo Subject ka
+ng g c subject
+routing me bhi add krlo
+
+ab story ye h k apn ko wo chahiye jab subject ka component open kre tb
+header me exclusive likha hua aaye
+
+header.c.ts me ajao
+	constructor se pehle
+	exclusive:boolean = false;
+	constructor(private _designUtility: DesignUtilityService) { }
+
+	ngOnInit(){
+		this._designUtility.exclusive.subscribe(res => {
+		  this.exclusive = res;
+		})
+	}
+
+header.html me ajao
+	ngIf lga k use krlo
+-
+
+but ab isko chalane k lye service file me ajao
+
+constructor se phle
+	exclusive = new Subject<boolean>();
+-
+
+ab ajao
+subject.c.ts file me
+
+	constructor(private _designUtility: DesignUtilityService) { }
+
+	ngOnInit(){
+		this._designUtility.exclusive.next(true);
+	}
+-
+
+ab sb component pr show ho rha hoga, jo apn nhi chahte
+islye use destroy krna pdega
+
+OnInit k bad
+	ngOnDestroyt(){
+		this._designUtility.exclusive.next(false);
+	}
+
+export me bhi add krlo ise
+OnInit, OnDestroy
+----------
+
+src me new folder bna lo - comps name se(component)
+
+ab new component bna lo
+ng g c comp1
+ng g c comp2
+ng g c comp3
+
+ab in 3 ko subject wale component me show kra denge
+
+subject.c.html
+
+	<app-comp1></app-comp1>
+	<app-comp1></app-comp2>
+	<app-comp1></app-comp3>
+
+ab show ho jayenge
+
+iske bad 3 component me bootstrap se cards le aao
+
+input field and button hona chahiye
+-
+
+then story ye h k comp1 me hm input de or har jagha wo show ho jaye
+eg. Subject me, comp2 me, comp3 me
+-
+
+ab ajao service file me
+	C() == constructor
+	
+	C() se phle
+	userName = new Subject<string>();
+-
+
+ab subject me ajao
+	
+	userName:string = 'Bilal';
+	constructor(private _designUtility: DesignUtilityService) { 
+		this._designUtility.userName.subscribe(res => {
+			this.userName = res;
+		})
+	}
+--
+ab subject.c.html me ajao
+	{{userName}}
+---
+
+ab ajao comp1.c.html
+	input me id bna lo
+	#uname
+
+	btn (click)="onChange(uname)">
+--
+
+comp1.c.ts
+	
+	userName:string = 'Bilal';
+	constructor(private _designUtility: DesignUtilityService) {  }
+
+	onInit khtm hone k bad
+
+	onChange(uname){
+		log(uname.value);
+		this._designUtility.userName.next(uname.value);
+	}
+-
+
+comp1.c.html
+	{{userName}}
+-
+
+isi tarha se comp2 ad comp3 me bhi krlo khud
+--
+
+BehaviorSubject -
+Same as subject bs isme ek initial value hoti h
+-
+
+ab service file me ajao
+
+userName = new BehaviorSubject<string>('Bilal');
+
+ab baki jagha se hata doge to bhi kaam chl jayga
+
+-------------------------------
+
+----------------------------------------------------------------------------
+==========
+Episode 17
+==========
+
+Replace Subject-
+multiple value ko store krke rakhta h
+or value kitne tym tk store rakhni h
+kitne tym phle emit hui h, ye sb kr skte h
+
+example
+kisi ne subscribe kra h youtube channel.
+to apn daal skte h last 5 days k 5 video ki notification dikha do
+agr last 5 days me 8 videos dali h to bs 5  hi dikhayga
+-
+
+bht bdi video h
+add todo jesa logic h,
+khud video dekh lena agr requirement ho to
+--
+
+design-utility.service.ts file
+	phle ye dikhao
+	//videoEmit = new ReplaySubject<string>(3);
+	
+	videoEmit = new ReplaySubject<string>(3, 5000);
+-				     kitni(count)  time(in sec)
+
+reply.c.ts file
+	
+	subscribeMode3: boolean = false;
+	subscription3:Subscription;
+	
+	user3Subscribe(){
+		if(this.subscribeMode3){
+			this.subscription3.unsubscribe();
+		}
+		else{
+		  this.subscription3 = this._du.videoEmit.subscribe(res => {
+			this.user3List.push(res)
+		  })
+		}
+	this.subscibeMode3 = !this.subscribeMode3;
+	}
+----------
+
+----------------------------------------------------------------------------
+==========
+Episode 18
+==========
+
+Async Subject
+ye value ko rok k rakhega
+fir last wali video dikha dega
+
+new component bna lo
+ng g c asyncSubject
+routing bhi krlo
+
+same old jesa example h
+html whi h
+-
+
+service wali file me ajao
+	asyncVideoEmit = new AsyncSubject();
+-
+
+input se value lake isme bhj do - button bna k
+upar kr chuke h esa
+
+----
+
+	asyncVideoEmit;
+	ngOnInit(){
+		this._du.asyncVideoEmit.subscribe(res=>{
+			this.asyncVideoEmit = res;
+		})
+	}
+
+	onComplete(){
+		this._du.asyncVideoEmit.complete();
+	}
+-
+
+ek btn bna lo html me
+fn name de dena click pr chale		"OnComplete"
+	
+-----------------
+
+----------------------------------------------------------------------------
+==========
+Episode 19
+==========
+
+Concat and Merge Operators:
+
+agr 2 stream h to
+phle first stream ka data lega jb wo complete ho jaygi
+then dusri stream ka lega.
+
+for exampple - jb ek project ka kaam khtm krega then dusra start krega
+
+componnent bna lo
+ng g c concat
+
+--
+
+concat.c.ts me ajao
+
+ngOnInit(): void {
+	const sourceTech = interval(1000).pipe(
+		map(v=> 'Tech #'+(v+1)),
+		take(5)				# 5 hi lega bs
+	);
+	const sourceComedy = interval(1000).pipe(
+		map(v=> 'Comedy #'+(v+1)),
+		take(3)				# 3 hi lega bs
+	);
+	const sourceNews = interval(1000).pipe(
+		map(v=> 'News #'+(v+1)),
+		take(4)				# 4 hi lega bs
+	);
+-
+
+agr ye 3 data ko lena h
+
+	const finalObs = concat(sourceTech, sourceComedy, sourceNews);
+	
+	finalObs.subscribe(res=>{
+		log(res)
+	});	
+}
+
+html me khud print kara lena
+-------------------
+
+Merge Operator:
+
+Jese2 stream milti rhegi merge krta rhega
+
+for example- ek project kr rha h, dusre project ka bug agya to phle bug resolve kra
+---
+
+componnent bna lo
+ng g c merge
+
+--
+
+merge.c.ts me ajao
+
+ngOnInit(): void {
+	const sourceTech = interval(2000).pipe(
+		map(v=> 'Tech #'+(v+1)),
+		take(5)				# 5 hi lega bs
+	);
+	const sourceComedy = interval(1500).pipe(
+		map(v=> 'Comedy #'+(v+1)),
+		take(3)				# 3 hi lega bs
+	);
+	const sourceNews = interval(3000).pipe(
+		map(v=> 'News #'+(v+1)),
+		take(4)				# 4 hi lega bs
+	);
+-
+
+agr ye 3 data ko lena h
+
+	const finalObs = merge(sourceTech, sourceComedy, sourceNews);
+	
+	finalObs.subscribe(res=>{
+		log(res)
+	});	
+}
+
+html me khud print kara lena
+-------------------
+
+----------------------------------------------------------------------------
+==========
+Episode 20
+==========
+
+MergeMap Operator in RXJS:
+
+It is a flattening operator
+subscribe k andar ek or ko subscribe krke value produce krna
+isko thk krke k deta h
+-
+
+new component bna lo
+ng g c mergemap
+routing bhi krlo
+
+-
+mergeMap = map + mergeAll
+-
+
+mergemap.c.ts
+
+	getData(data){
+		return of(data + 'Video uploded')
+	}
+
+	ngOnInit(): void {
+		const source = from(['Tech', 'Comedy', 'News'])
+	}
+
+	source.pipe(
+		mergeMap(res => this.getData(res))
+	)
+	.subscribe(res => {
+		log(res);
+	})
+-----
+
+----------------------------------------------------------------------------
+==========
+Episode 21
+==========
+
+ConcatMap: Flattening operator
+ye order me kaam krta h
+jese jese data milta jayga ye subscribe krta jayga
+
+new component bna lo
+ng g c concatMap
+routing bhi krlo
+
+concatMap.c.ts me ajao
+
+c() k bad
+	getData(data){
+		return of(data+ ' Video Uploaded').pipe(delay(2000));
+	}
+
+ngOnInit(): void {
+	const source = from(['Tech', 'Comedy', 'News']);
+
+	source.pipe(
+		concatMap(res => this.getData(res))
+	)
+	.subscribe(res => {
+		log(res);
+	})
+}
+
+similar h mergeMap jese bs mergeMap ek bar me value de deta h
+or concatMap await jesa hota h, ek kaam complete hoga tb dusra krega
+--------------
+
+----------------------------------------------------------------------------
+==========
+Episode 22
+==========
+ConcatMap mobile Notification
+
+I skip this video
+
+----------------------------------------------------------------------------
+==========
+Episode 23
+==========
+
+SwitchMap Operator : Flatening Operator
+isme hota h cancelling effect - request cancel krta h
+
+jab saerch kre kuch likhe then hata kar kuch new likh de
+tab wo old request cancel kr dega, or new request bhejega
+
+new component bna lo
+
+ng g c switchMap
+
+c() k bad
+	getData(data){
+		return of(data+ ' Video Uploaded').pipe(delay(1000));
+	}
+
+ngOnInit(): void {
+	const source = from(['Tech', 'Comedy', 'News']);
+
+	source.pipe(
+		switchMap(data => this.getData(data))
+	)
+	.subscribe(res => {
+		log(res)
+	})
+}
+---------
+
+----------------------------------------------------------------------------
+==========
+Episode 24
+==========
+
+SwitchMap operator (for searching) :
+
+component bna lo
+ng g c switchMap2
+routing bhi krlo
+-
+
+switchMap.c.html
+
+	<form #searchForm="ngForm">
+	
+		<input type="text" ngModel class="form-control name="searchForm">	
+
+ab table le aao bootstrap se
+--
+
+switchMap.c.ts
+
+	C() se phle
+
+	@ViewChild('searchForm') searchForm: NgForm
+
+ab ngOnInit hata do
+
+	ngAfterViewInit(): void {
+		const fromValue = this.searchForm.valueChanges;
+
+		formValue.pipe(			
+			// map(data => data['searchTerm'])
+			filter(() => this.searchForm.valid),
+			#ye bad me lga dena, html k lye h, taki starting me data
+				show nhi ho
+
+			pluck('searchTerm'),
+			debounceTime(500),
+			distinctUntilChanged(),
+			switchMap(data => this._searchService.getSearches(data))
+		)	
+		.subscribe(res => {
+			log(res)
+			this.searchResult = res;
+			log('Count => ', Object.keys(res).length)
+		})
+	}
+-
+
+ab data apn ko api se chahiye to service me krenge ab kaam
+
+service create krlo
+
+search.service.ts
+
+C() se phle
+	url = 'https://my-json-server.typicode.com/Uxtrendz/apis/videoList';
+	#ye api banai hui h, 100% working h
+
+	constructor(private http: HttpClient) { }
+
+	getSearches(searchTerm):Observable<Search>{
+		return this.http.get<Search>(this.url + '?q=' + searchTerm);
+	}
+--
+
+ab app folder me ek or folder bna lo
+	appInterface name se
+
+ab isme file bnao
+	search.interface.ts
+		export interface Search {
+			thumb:string;
+			title:string;
+			description:string;
+		}	
+---
+
+switchmap2.c.ts
+
+	constructor(privae _searchService: SearchService) { }
+
+ab
+	ngAfterViewInit me
+		this._searchService.getSearches().subscribe(res => {
+			log(res)
+		})
+-
+ab console.log ho rha hoga, check krke bta do.
+HTMl me khud le ana 
+
+----------------------------------------------------------------------------
+==========
+Episode 25
+==========
+
+ExhaustMap Operator: DND typa ka hota h
+
+kisi request ko multiple tym send krenge to ek bar hi jaygi request bs
+
+jab tk ek request complete nhi hoga, dusri request nhi lega
+ignore krega
+---
+
+new component bna lo
+
+exhaustMap.c.html
+	
+	h1 {{num}}
+
+	btn bna lo
+		(click) = 'btnClick()'
+---	
+
+exhaustMap.c.ts
+	constructor( private http: HttpClient,
+		private _designUtility: DesignUtilityService)  { }
+
+	url = 'https://global-1bb0f.firebaseio.com/exhaustMap.json';
+
+	num = 0;
+
+	ngOnInit(){
+
+	}
+
+	onSave(changes){
+		return this.http.put(this.url, {data:changes})
+	}
+
+	btnClick(){
+		//this.num++;
+		this.onSave(this.num++).subscribe(res => {
+			log(res)
+		})
+	}
+
+ab check krke dekh lo console me.
+jitni bar btn click kroge utni request jayenge. 
+(which is not good for performance)
+--------
+
+ab html file me
+
+#btn lga do 
+(click) ka pura hata lo
+
+--
+	@ViewChild('btn') btn:ElementRef;
+
+	ngAfterViewInit(){
+		fromEvent(this.btn.nativeElement, 'click').pipe(
+			tap(()=> this.fetching = true),
+			exhaustMap(()=> this.onSave(this.num++))
+		)
+		.subscribe(res => {
+			log(res);
+			this.onFetch();
+			this.fetching = false;
+		})
+	}
+
+	onFetch(){
+		this.http.get<any>(this.url).subscribe(res => {
+			log(res.data)
+			this.saveRequest = res.data;
+				#ye bna lo upr
+		})
+	}
+
+----------------------------------------------------------------------------
+==========
+Episode 26
+==========
+
+ShareReplay Operator
+avaoid kr skte h duplicate http request
+
+new component bna lo
+
+shareReplay.c.ts
+
+	url = 'https://test-producta-b05fe.firebaseio.com/products.json';
+	allProducts:Observable<any>;
+	mobiles:Observable<any>;
+	laptops:Observable<any>;
+
+	constructor(private http: HttpClient) { }
+
+	ngOnInit(): void {
+		//this.http.get(this.url).subscribe(res => {
+			//log(res)
+			//this.allProducts = res;
+		//})
+		
+		#abi 3 request ja rhi hongi, performance down ho rha hoga
+		this.allProducts = this.http.get(this.url).pipe(
+			shareReplay();
+			#ab nhi ja rhi hongi request bht sari
+		);
+
+		this.mobiles = this.allProducts.pipe(
+			map(res => res.filter(mobileData => {
+				return mobileData['type']=='mobile'
+			}))
+		)
+
+		this.laptops = this.allProducts.pipe(
+			map(res => res.filter(pcData => {
+				return pcData['type']=='pc'
+			}))
+		)
+	}
+
+ab ise html me show kra do ajayga, ngFor lga k
+agr error aye to jaha ngFor lagaya whi pr ise bhi add kr dena
+
+| async
+---
+
+category typ ka krenge ab.
+abi sare products arhe honge.
+ab apn chahte h mobile k alg aye and PC k alg aye
+-
+
+----------------------------------------------------------------------------
+==========
+Episode 27
+==========
+
+CombineLatest and WithLatestFrom in RXJS
+
+CombineLatest:
+2 stream ka data combine kr deta h
+
+dono stream ki latest video ko combine krke de deta h
+-
+
+combineLatest.c.ts
+	nameSource = ['Bilal', 'Ravi', 'Rishab'];
+	colorSource = ['red', 'green', 'blue']
+--
+
+isko ngFor me lga do select box me html me
+and 
+select me likh do 
+	#name
+	#color
+--
+
+.ts
+	@ViewChild('name') name:ElementRef;
+	@ViewChild('color') name:ElementRef;
+
+	ngAfterViewInit(){
+
+		//For names
+		const nameObs = 
+		fromEvent<any>(this.name.nativeElement, 'change').pipe(
+			map(event => event.target.value)
+		)
+
+		// .subscribe(res=>{
+			//log(res)
+		//})
+
+		//For colors
+		const colorObs = 
+		fromEvent<any>(this.color.nativeElement, 'change').pipe(
+			pluck('target','value')
+		)
+
+		// .subscribe(res=>{
+			//log(res)
+		//})
+
+		ab 2 observable bn gye h
+--
+
+ab main kaam start hoga
+
+		combineLatest(nameObs, colorObs).subscribe(([name,color])=>{
+			log(name,color)
+			this.createBox(name, color, 'elContainer')
+		}
+	}
+-
+
+ab chlne lga hoga, console pr check kr skte h
+
+ab UI k lye
+
+	createBox(name, color, containerId){
+		let el = document.createElement('div');
+		el.innerText = name;
+		el.setAttribute("class",color);
+		document.getElementById(containerId).appendChild(el);
+	}
+--
+
+.html
+	<div class="wrapper" id="elContainer">	
+	</div>
+
+-----------------------------
+
+WithLatestFrom:
+isme do hote h, master and slave
+
+jb master change hoga tbi box create krega
+
+	nameObs.pipe(withLatestFrom(colorObs)).subscribe(([name,color])=>{
+		log(name,color)
+		this.createBox(name, color, 'elContainer2')
+	}
+-
+
+.html
+	<div class="wrapper" id="elContainer2">	
+	</div>
+-------
+
+----------------------------------------------------------------------------
+==========
+Episode 28
+==========
+
+Zip & ForkJoin Operator:
+
+ZIP: Jab dono source me change detect hoga tbi chalega
+
+bht similar h phle jese
+
+new component bna lo
+
+zip.c.ts
+	
+	nameSource = ['Bilal', 'Ravi', 'Rishab'];
+	colorSource = ['red', 'green', 'blue']
+
+	//Template references
+	
+	@ViewChild('name') name:ElementRef;
+	@ViewChild('color') name:ElementRef;
+
+	//For names
+	const nameObs = 
+	fromEvent<any>(this.name.nativeElement, 'change').pipe(
+		map(event => event.target.value),
+		take(3)		# ForkJoin k lye h, bad me lagana
+	)
+-
+
+	//For color
+	const colorObs = 
+	fromEvent<any>(this.color.nativeElement, 'change').pipe(
+		map(event => event.target.value),
+		take(3)		# ForkJoin k lye h, bad me lagana
+	)
+
+	zip(nameObs, colorObs).subscribe(([name,color])=>{
+		log(name,color)
+		this.createBox(name, color, 'elContainer')
+	}
+-
+
+ab UI k lye
+
+	createBox(name, color, containerId){
+		let el = document.createElement('div');
+		el.innerText = name;
+		el.setAttribute("class",color);
+		document.getElementById(containerId).appendChild(el);
+	}
+--
+
+.html
+	<div class="wrapper" id="elContainer">	
+	</div>
+-------------------
+
+ForkJoin:
+last value k sath kaam krta h
+jb stream khtm hogi tb ayega last me
+-
+
+	forkJoin(nameObs, colorObs).subscribe(([name,color])=>{
+		log(name,color)
+		this.createBox(name, color, 'elContainer')
+	}
+
+.html
+	<div class="wrapper" id="elContainer2">	
+	</div>
+-------------------
+
+----------------------------------------------------------------------------
+==========
+Episode 29
+==========
+
+CatchError & ThrowError:
+
+agr error user ko dikhana ho - UI pr
+
+new component bna lo
+catchThrow.c.html
+
+	alert box lelo
+	usme error line likh do
+	*ngIf="error"
+-
+
+ab apn ko error k lye bar2 code nhi likhna pde islye use krenge service
+
+ng g s error
+
+error.service.ts
+	handleError(err:HttpErrorResponse){
+		log(err)
+		let errMsg = '';
+		if(!err.error || !err.error.error){
+			errMsg = 'Error 1';
+		}
+		else{
+			if(err.error.error == 'Permission denied'){
+				errMsg = 'Error 2';
+			}	
+		}
+		return throwError(errMsg)
+	}
+
+ab apn isko jaha bhi use krna chahe, use kr skte h
+
+-----
+Or achi understanding k lye video dekh lena ye wali
+UX Trendz Episode #29  Video-35
+
+
+
+
+
+
+
+
+
+
+
+0:05
+Video 35
+----------------------------------------------------------------------------
+==========
+Episode 2
+==========
+
+
+
+==============================================================
+Agar api mese data search krna h to
+
+apiLink?q=jo bhi search krna h wo
+
+apiLink?q=rxjs
+==============================================================
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
