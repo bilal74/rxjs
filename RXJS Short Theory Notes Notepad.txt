@@ -30,9 +30,9 @@ map(x => 10 * x)
 ----------------------------------------------------------------------------
 Promise and Asynchronous:
 D/f b/w Promise and Observable
-Promise				|	Observable
+Promise					|	Observable
 					|
-1. async					| 	1. async or sync (both)
+1. async				| 	1. async or sync (both)
 2. Return Single Value			| 	2. Return Stream of value
 	- resolve (yes)			|		0----0-----0
 	- reject (no)			|
